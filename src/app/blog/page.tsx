@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Blog — Unix Time & Developer Guides | EpochNow",
   description: "Practical guides on Unix timestamps, epoch time, and time handling for developers.",
+  alternates: { canonical: "/blog" },
 };
 
 const posts = [

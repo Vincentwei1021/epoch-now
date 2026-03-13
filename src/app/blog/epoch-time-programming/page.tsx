@@ -6,12 +6,28 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Working with Epoch Time in JavaScript, Python, and Go",
   description: "Practical code examples for converting, comparing, and formatting Unix timestamps in JavaScript, Python, and Go — the three most popular backend languages.",
+  keywords: ["epoch time javascript", "unix timestamp python", "timestamp go", "convert epoch", "date to timestamp"],
   alternates: { canonical: "/blog/epoch-time-programming" },
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "Working with Epoch Time in JavaScript, Python, and Go",
+  description: "Practical code examples for converting, comparing, and formatting Unix timestamps in JavaScript, Python, and Go — the three most popular backend languages.",
+  datePublished: "2026-03-08",
+  dateModified: "2026-03-08",
+  author: { "@type": "Organization", name: "EpochNow" },
+  publisher: { "@type": "Organization", name: "EpochNow" },
 };
 
 export default function EpochTimeProgramming() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <Header />
       <main className="px-4 py-12 sm:px-6 sm:py-16">
         <article className="mx-auto max-w-3xl">

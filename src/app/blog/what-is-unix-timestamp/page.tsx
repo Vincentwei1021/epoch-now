@@ -6,12 +6,28 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "What Is a Unix Timestamp? A Developer's Complete Guide",
   description: "Everything developers need to know about Unix timestamps — history, how they work, the Year 2038 problem, and practical examples in every major programming language.",
+  keywords: ["unix timestamp", "epoch time", "unix time explained", "what is epoch", "timestamp guide"],
   alternates: { canonical: "/blog/what-is-unix-timestamp" },
+};
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: "What Is a Unix Timestamp? A Developer's Complete Guide",
+  description: "Everything developers need to know about Unix timestamps — history, how they work, the Year 2038 problem, and practical examples in every major programming language.",
+  datePublished: "2026-03-10",
+  dateModified: "2026-03-10",
+  author: { "@type": "Organization", name: "EpochNow" },
+  publisher: { "@type": "Organization", name: "EpochNow" },
 };
 
 export default function WhatIsUnixTimestamp() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <Header />
       <main className="px-4 py-12 sm:px-6 sm:py-16">
         <article className="mx-auto max-w-3xl">

@@ -18,13 +18,25 @@ export const metadata: Metadata = {
     title: "Unix Timestamp Converter — Epoch to Date | EpochNow",
     description: "Convert Unix timestamps to dates and back. Live clock, multiple timezones. Free & private.",
     url: siteUrl, siteName: "EpochNow", type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "EpochNow" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Unix Timestamp Converter | EpochNow",
     description: "Convert Unix epoch timestamps to human-readable dates. Live mode, multi-timezone.",
+    images: ["/opengraph-image"],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
