@@ -112,7 +112,7 @@ export default function EpochConverter() {
       <div className="mx-auto max-w-4xl space-y-8">
 
         {/* Live Clock */}
-        <div className="rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white p-6 shadow-sm dark:border-violet-800 dark:from-violet-950/50 dark:to-gray-800">
+        <div className="rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white p-4 shadow-sm dark:border-violet-800 dark:from-violet-950/50 dark:to-gray-800 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-gray-900 dark:text-white">🔴 Live Unix Timestamp</h2>
             <button onClick={() => setLiveMode(!liveMode)} className={`rounded-full px-4 py-1.5 text-xs font-semibold transition-colors ${liveMode ? "bg-violet-600 text-white" : "bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300"}`}>
@@ -150,10 +150,10 @@ export default function EpochConverter() {
         {/* Converter Panels */}
         <div className="grid gap-6 lg:grid-cols-2" style={{ minWidth: 0 }}>
           {/* Timestamp → Date */}
-          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">⏱ Timestamp → Date</h2>
             <div className="space-y-3">
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <input
                   type="text" value={timestamp} onChange={(e) => setTimestamp(e.target.value)}
                   placeholder="e.g. 1710000000"
@@ -175,7 +175,7 @@ export default function EpochConverter() {
           </div>
 
           {/* Date → Timestamp */}
-          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">📅 Date → Timestamp</h2>
             <div className="space-y-3">
               <input type="date" value={dateStr} onChange={(e) => setDateStr(e.target.value)}
@@ -202,7 +202,7 @@ export default function EpochConverter() {
 
         {/* Results */}
         {result && (
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 animate-fade-in">
+          <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 animate-fade-in sm:p-6">
             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">🌍 Result — All Timezones</h2>
             <div className="mb-4 grid gap-3 sm:grid-cols-3">
               <div className="rounded-lg bg-gray-50 p-3 dark:bg-gray-900">
