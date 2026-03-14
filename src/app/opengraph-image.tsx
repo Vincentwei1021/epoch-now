@@ -10,7 +10,7 @@ export default function Image() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #2e1065 0%, #7c3aed 100%)",
+          background: "linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%)",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -20,7 +20,7 @@ export default function Image() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ fontSize: 96, marginBottom: 16 }}>⚡</div>
+        <div style={{ fontSize: 96, marginBottom: 16 }}>⏱️</div>
         <div
           style={{
             fontSize: 64,
@@ -39,7 +39,7 @@ export default function Image() {
             fontWeight: 400,
           }}
         >
-          Unix Timestamp Converter
+          Convert Unix Timestamps — Live Clock, 14+ Timezones
         </div>
         <div
           style={{

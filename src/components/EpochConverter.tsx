@@ -47,15 +47,22 @@ export default function EpochConverter() {
   const [timeStr, setTimeStr] = useState("");
   const [result, setResult] = useState<{ date: Date; display: Record<string, string> } | null>(null);
   const [liveMode, setLiveMode] = useState(true);
-  const [liveTs, setLiveTs] = useState(Date.now());
+  const [liveTs, setLiveTs] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const [error, setError] = useState("");
+
+  // Client-only mount to avoid hydration mismatch (P3-005)
+  useEffect(() => {
+    setMounted(true);
+    setLiveTs(Date.now());
+  }, []);
 
   // Live mode tick
   useEffect(() => {
-    if (!liveMode) return;
+    if (!liveMode || !mounted) return;
     const id = setInterval(() => setLiveTs(Date.now()), 50);
     return () => clearInterval(id);
-  }, [liveMode]);
+  }, [liveMode, mounted]);
 
   // Convert timestamp → date
   const convertTimestamp = useCallback(() => {
@@ -96,9 +103,9 @@ export default function EpochConverter() {
     setResult({ date, display });
   }, [dateStr, timeStr, selectedTz, unit]);
 
-  const liveSeconds = Math.floor(liveTs / 1000);
-  const liveMillis = liveTs;
-  const liveMicros = liveTs * 1000;
+  const liveSeconds = liveTs ? Math.floor(liveTs / 1000) : 0;
+  const liveMillis = liveTs ?? 0;
+  const liveMicros = (liveTs ?? 0) * 1000;
 
   return (
     <section id="converter" className="px-4 py-8 sm:px-6 sm:py-12">
@@ -113,37 +120,37 @@ export default function EpochConverter() {
             </button>
           </div>
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
+            <div className="min-w-0 rounded-xl bg-white p-4 dark:bg-gray-900">
               <p className="text-xs font-medium text-gray-400 mb-1">Seconds</p>
               <div className="flex items-center gap-2">
-                <p className={`font-mono text-2xl font-bold text-violet-600 dark:text-violet-400 tabular-nums ${liveMode ? "animate-pulse-glow" : ""}`}>{liveSeconds}</p>
+                <p suppressHydrationWarning className={`font-mono text-2xl font-bold text-violet-600 dark:text-violet-400 tabular-nums truncate ${liveMode ? "animate-pulse-glow" : ""}`}>{mounted ? liveSeconds : "\u00A0"}</p>
                 <CopyButton text={String(liveSeconds)} />
               </div>
             </div>
-            <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
+            <div className="min-w-0 rounded-xl bg-white p-4 dark:bg-gray-900">
               <p className="text-xs font-medium text-gray-400 mb-1">Milliseconds</p>
               <div className="flex items-center gap-2">
-                <p className={`font-mono text-lg font-bold text-violet-600 dark:text-violet-400 tabular-nums ${liveMode ? "animate-pulse-glow" : ""}`}>{liveMillis}</p>
+                <p suppressHydrationWarning className={`font-mono text-lg font-bold text-violet-600 dark:text-violet-400 tabular-nums truncate ${liveMode ? "animate-pulse-glow" : ""}`}>{mounted ? liveMillis : "\u00A0"}</p>
                 <CopyButton text={String(liveMillis)} />
               </div>
             </div>
-            <div className="rounded-xl bg-white p-4 dark:bg-gray-900">
+            <div className="min-w-0 rounded-xl bg-white p-4 dark:bg-gray-900">
               <p className="text-xs font-medium text-gray-400 mb-1">Microseconds</p>
               <div className="flex items-center gap-2">
-                <p className={`font-mono text-sm font-bold text-violet-600 dark:text-violet-400 tabular-nums ${liveMode ? "animate-pulse-glow" : ""}`}>{liveMicros}</p>
+                <p suppressHydrationWarning className={`font-mono text-sm font-bold text-violet-600 dark:text-violet-400 tabular-nums truncate ${liveMode ? "animate-pulse-glow" : ""}`}>{mounted ? liveMicros : "\u00A0"}</p>
                 <CopyButton text={String(liveMicros)} />
               </div>
             </div>
           </div>
-          <p className="mt-3 text-center text-sm text-gray-500 dark:text-gray-400">
-            {formatDateInTz(new Date(liveTs), "UTC")} (UTC)
+          <p suppressHydrationWarning className="mt-3 text-center text-sm text-gray-500 dark:text-gray-400">
+            {mounted && liveTs ? formatDateInTz(new Date(liveTs), "UTC") + " (UTC)" : "\u00A0"}
           </p>
         </div>
 
         {/* Converter Panels */}
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2" style={{ minWidth: 0 }}>
           {/* Timestamp → Date */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">⏱ Timestamp → Date</h2>
             <div className="space-y-3">
               <div className="flex gap-2">
@@ -168,7 +175,7 @@ export default function EpochConverter() {
           </div>
 
           {/* Date → Timestamp */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+          <div className="min-w-0 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
             <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-white">📅 Date → Timestamp</h2>
             <div className="space-y-3">
               <input type="date" value={dateStr} onChange={(e) => setDateStr(e.target.value)}
@@ -222,10 +229,10 @@ export default function EpochConverter() {
             </div>
             <div className="space-y-2">
               {TIMEZONES.map(tz => (
-                <div key={tz} className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-2.5 dark:bg-gray-900">
-                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{TZ_LABELS[tz]}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm text-gray-800 dark:text-gray-200">{result.display[tz]}</span>
+              <div key={tz} className="flex flex-col gap-1 rounded-lg bg-gray-50 px-4 py-2.5 dark:bg-gray-900 sm:flex-row sm:items-center sm:justify-between">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400 shrink-0">{TZ_LABELS[tz]}</span>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="font-mono text-sm text-gray-800 dark:text-gray-200 truncate">{result.display[tz]}</span>
                     <CopyButton text={result.display[tz]} />
                   </div>
                 </div>
