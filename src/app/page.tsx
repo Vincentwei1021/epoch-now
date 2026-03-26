@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import EpochConverter from "@/components/EpochConverter";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import DevToolsNav from "@/components/DevToolsNav";
 import { faqData } from "@/data/faq";
 
 const webAppSchema = {
@@ -137,6 +138,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <DevToolsNav currentSlug="epoch-now" />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
