@@ -1,3 +1,4 @@
+import AdBanner from "@/components/AdBanner";
 import Header from "@/components/Header";
 import EpochConverter from "@/components/EpochConverter";
 import FAQ from "@/components/FAQ";
@@ -58,6 +59,7 @@ export default function Home() {
             </p>
           </div>
         </section>
+        <AdBanner className="mx-auto max-w-5xl px-4 py-4" />
 
         <EpochConverter />
 
@@ -139,6 +141,7 @@ export default function Home() {
           </div>
         </section>
         <DevToolsNav currentSlug="epoch-now" />
+        <AdBanner className="mx-auto max-w-5xl px-4 py-6" />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }} />
